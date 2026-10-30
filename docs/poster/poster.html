@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>HyperLogistics-Stream poster</title>
+<style>
+  @page { size: 2000px 1500px; margin: 0; }
+  :root {
+    --blue: #0b5cad; --dark: #12344d; --band: #a9d0de; --panel: #dff0f6; --panel2: #eef7fb;
+    --teal: #1d6b82; --orange: #e8912d; --green: #2f9e5b; --red: #c8372d; --ink: #1b2a35;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { width: 2000px; height: 1500px; font-family: "Segoe UI", "Open Sans", Arial, sans-serif;
+         color: var(--ink); background: #fff; position: relative; overflow: hidden; }
+
+  /* ---------- header ---------- */
+  .header { position: absolute; left: 0; top: 0; width: 2000px; height: 150px; background: var(--blue);
+            color: #fff; padding: 14px 20px; }
+  .header h1 { margin: 0; font-size: 52px; letter-spacing: .5px; line-height: 70px; }
+  .header .sub { font-size: 29px; margin-top: 12px; }
+  .header .sub span { margin-right: 30px; }
+  .header .qr { position: absolute; right: 330px; top: 12px; width: 126px; height: 126px; background: #fff;
+                padding: 3px; }
+  .header .qr img { width: 100%; height: 100%; }
+  .header .logo { position: absolute; right: 24px; top: 34px; font-size: 84px; font-weight: 800;
+                  letter-spacing: 2px; }
+  .header .logo small { display: block; font-size: 17px; letter-spacing: 1px; font-weight: 500; margin-top: -8px; }
+
+  /* ---------- key ---------- */
+  .key { position: absolute; left: 8px; top: 160px; width: 1984px; height: 126px; background: var(--panel2);
+         border: 2px solid var(--teal); border-radius: 30px; display: flex; align-items: center; padding: 0 18px;
+         gap: 22px; }
+  .key .tag { background: var(--band); border-radius: 22px 0 0 22px; font-weight: 800; font-size: 40px;
+              padding: 34px 18px; margin-left: -18px; height: 100%; display: flex; align-items: center; }
+  .key .item { display: flex; align-items: center; gap: 14px; flex: 1; }
+  .key .item b { font-size: 26px; display: block; }
+  .key .item span { font-size: 21px; line-height: 25px; display: block; }
+  .shape { flex: none; width: 64px; height: 64px; }
+
+  /* ---------- panels ---------- */
+  .panel { position: absolute; background: #fff; border: 2px solid var(--band); border-radius: 26px; overflow: hidden; }
+  .panel h2 { margin: 0; background: var(--band); font-size: 38px; white-space: nowrap; text-align: center; padding: 8px 0 7px;
+              font-weight: 800; }
+  .panel h2.layer { font-size: 34px; text-align: center; font-weight: 400; }
+  .panel h2.layer b { font-weight: 800; }
+  .body { padding: 14px 18px; font-size: 22px; line-height: 29px; }
+  ul { margin: 6px 0 0 0; padding-left: 26px; } li { margin-bottom: 6px; }
+
+  /* left column */
+  #problem { left: 8px; top: 296px; width: 436px; height: 372px; }
+  #dataset { left: 8px; top: 680px; width: 436px; height: 812px; }
+  /* center column */
+  #l1 { left: 458px; top: 296px; width: 1136px; height: 212px; }
+  #l2 { left: 458px; top: 518px; width: 1136px; height: 282px; }
+  #l3 { left: 458px; top: 810px; width: 1136px; height: 290px; }
+  #l4 { left: 458px; top: 1110px; width: 790px; height: 382px; }
+  #demo { left: 1260px; top: 1110px; width: 334px; height: 382px; }
+  /* right column */
+  #results { left: 1608px; top: 296px; width: 384px; height: 924px; }
+  #concl { left: 1608px; top: 1230px; width: 384px; height: 262px; }
+
+  .panel.lp { display: flex; flex-direction: column; }
+  .layerbody { background: var(--panel); flex: 1; padding: 10px 16px; position: relative; min-height: 0; }
+  .row { display: flex; align-items: center; gap: 12px; height: 100%; }
+  .box { background: #fff; border: 2.5px solid var(--teal); border-radius: 14px; padding: 8px 12px;
+         font-size: 21px; line-height: 25px; text-align: center; }
+  .box b { display: block; font-size: 23px; color: var(--dark); }
+  .box.sm { font-size: 19px; line-height: 22px; padding: 6px 9px; }
+  .arrow { flex: none; font-size: 54px; color: var(--teal); line-height: 1; font-weight: 800; }
+  .stack { display: flex; flex-direction: column; gap: 7px; }
+  .cyl { width: 140px; padding: 0 0 8px; text-align: center; border: 3px solid #8a6a3a; border-radius: 26px / 15px;
+         background: linear-gradient(#e9c79a, #cf9d58); font-weight: 800; font-size: 24px; line-height: 27px;
+         padding-top: 16px; height: 124px; }
+  .cyl.silver { border-color: #6c7780; background: linear-gradient(#e3e8ec, #aab4bd); }
+  .cyl.gold { border-color: #b08a10; background: linear-gradient(#fbe58c, #e6b926); }
+  .cyl small { display: block; font-weight: 500; font-size: 16.5px; line-height: 19px; margin-top: 4px; }
+  .kafka { background: #fff; border: 3px solid var(--blue); border-radius: 16px; padding: 10px 14px;
+           text-align: center; font-size: 21px; line-height: 25px; }
+  .kafka b { display: block; font-size: 30px; color: var(--blue); }
+  .spark { background: #fff; border: 3px solid var(--orange); border-radius: 16px; padding: 10px 14px; flex: 1;
+           height: 100%; }
+  .spark .t { font-size: 25px; font-weight: 800; text-align: center; color: #a35a0e; margin-bottom: 8px; }
+  .chips { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .chip { background: #fdf0de; border: 2px solid var(--orange); border-radius: 10px; padding: 6px 10px;
+          font-size: 20px; line-height: 23px; text-align: center; }
+  .chip.hl { background: #e1f4e8; border-color: var(--green); }
+  .chips2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .chips2 .chip { text-align: left; font-size: 19px; line-height: 22px; }
+  .chips2 b { color: var(--orange); font-size: 22px; margin-right: 4px; }
+  .note { font-size: 20px; text-align: center; margin-top: 8px; color: #6b3f08; font-weight: 600; }
+
+  .legend { font-size: 18px; line-height: 21px; }
+  .pill { display: inline-block; border-radius: 14px; padding: 2px 12px; color: #fff; font-weight: 700; font-size: 20px; }
+  .tabs { display: flex; gap: 12px; }
+  .tab { flex: 1; background: #fff; border: 2.5px solid var(--teal); border-radius: 14px; padding: 10px 10px;
+         text-align: center; font-size: 19.5px; line-height: 23px; }
+  .tab b { display: block; font-size: 25px; color: var(--blue); margin-bottom: 3px; }
+
+  .results img { width: 100%; display: block; margin: 8px 0 2px; }
+  .results .cap { font-size: 18.5px; line-height: 22px; margin: 0 0 8px; }
+  .results .cap b { color: var(--blue); }
+  .results .body { padding: 8px 14px 10px; }
+
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 4px 0 2px; }
+  .stat { flex: 1; background: var(--panel); border-radius: 12px; text-align: center; padding: 5px 2px; }
+  .stat b { display: block; font-size: 28px; color: var(--blue); line-height: 32px; }
+  .stat span { font-size: 16px; line-height: 17px; display: block; }
+
+  .tbl { width: 100%; border-collapse: collapse; font-size: 18px; margin-top: 6px; }
+  .tbl td, .tbl th { padding: 3px 6px; border-bottom: 1px solid #c9dde6; text-align: left; }
+  .tbl th { background: var(--panel); }
+  .tbl td.n { text-align: right; font-variant-numeric: tabular-nums; }
+
+  .concl .body { font-size: 20px; line-height: 26px; padding: 8px 14px; }
+  .concl li { margin-bottom: 4px; }
+  .demo { text-align: center; }
+  .demo img { width: 228px; height: 228px; margin-top: 12px; }
+  .demo .u { font-size: 20px; margin-top: 8px; font-weight: 600; }
+  .foot { position: absolute; left: 0; bottom: 0; }
+
+  /* simple dataset list */
+  .ds { display: flex; align-items: center; gap: 12px; margin: 4px 0 5px; }
+  .ds .icimg { flex: none; width: 62px; height: 62px; object-fit: contain; }
+  .ds b { display: block; font-size: 24px; line-height: 27px; }
+  .ds span { font-size: 19.5px; line-height: 23px; display: block; }
+  .flow { background: var(--panel2); border-radius: 18px; padding: 10px 14px; margin-top: 8px; }
+  .flow .hd { font-weight: 800; font-size: 24px; text-align: center; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<div class="header">
+  <h1>HYPERLOGISTICS-STREAM: REAL-TIME HUB-TO-HUB ETA</h1>
+  <div class="sub"><span>Tony Nguyen, Joe Doan and Menkal Son</span>
+    <span>COMP-SCI 5540 &mdash; Principles of Big Data Management &mdash; Fall 2026</span></div>
+  <div class="qr"><img src="figures/qr_repo.png" alt="repo QR"></div>
+  <div class="logo">UMKC</div>
+</div>
+
+<!-- ============ KEY ============ -->
+<div class="key">
+  <div class="tag">KEY</div>
+  <div class="item">
+    <svg class="shape" viewBox="0 0 64 64"><ellipse cx="32" cy="14" rx="24" ry="9" fill="#e6b926" stroke="#8a6a3a" stroke-width="3"/><path d="M8 14v34c0 5 11 9 24 9s24-4 24-9V14" fill="#cf9d58" stroke="#8a6a3a" stroke-width="3"/></svg>
+    <div><b>Data Source / Store</b><span>BTS, NOAA, FAA, NWS, OpenSky; Parquet tiers</span></div></div>
+  <div class="item">
+    <svg class="shape" viewBox="0 0 64 64"><rect x="6" y="8" width="52" height="48" rx="9" fill="#fff" stroke="#0b5cad" stroke-width="4"/><path d="M18 40l10-14 8 9 10-17" fill="none" stroke="#0b5cad" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div><b>Kafka Ingestion</b><span>Replay and live topics</span></div></div>
+  <div class="item">
+    <svg class="shape" viewBox="0 0 64 64"><path d="M32 4l7 17 18 2-14 12 4 18-15-10-15 10 4-18L7 23l18-2z" fill="#fdf0de" stroke="#e8912d" stroke-width="4" stroke-linejoin="round"/></svg>
+    <div><b>Spark Streaming</b><span>Weather join, repeat-safe writes</span></div></div>
+  <div class="item">
+    <svg class="shape" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="#e1f4e8" stroke="#2f9e5b" stroke-width="4"/><path d="M19 34l9 9 17-20" fill="none" stroke="#2f9e5b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div><b>ML Model</b><span>GBT vs. two baselines</span></div></div>
+  <div class="item">
+    <svg class="shape" viewBox="0 0 64 64"><rect x="5" y="9" width="54" height="40" rx="5" fill="#fff" stroke="#12344d" stroke-width="4"/><rect x="13" y="29" width="8" height="12" fill="#0b5cad"/><rect x="26" y="21" width="8" height="20" fill="#0b5cad"/><rect x="39" y="25" width="8" height="16" fill="#e8912d"/><rect x="20" y="53" width="24" height="5" fill="#12344d"/></svg>
+    <div><b>Dashboard</b><span>Streamlit, 3 tabs</span></div></div>
+</div>
+
+<!-- ============ LEFT ============ -->
+<div class="panel" id="problem">
+  <h2>Problem Statement</h2>
+  <div class="body">
+    <ul>
+      <li>Unexpected transit delays bottleneck dock doors and downstream <b>hubs</b>.</li>
+      <li>Static schedules cannot react to weather, airport ground stops or a backlog building up.</li>
+      <li><b>Goal:</b> predict arrival-delay change (&Delta; = ArrDelay &minus; DepDelay) per trip in <b>real time</b>, and show how a hub compares with its <b>typical</b> day.</li>
+      <li>Flights serve as a <b>public proxy</b> for hub-to-hub freight movement.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="panel" id="dataset">
+  <h2>Dataset Description</h2>
+  <div class="body">
+    <div class="ds"><img class="icimg" src="figures/icons/bts.png" alt="bts">
+      <div><b>BTS On-Time Performance</b><span>2018&ndash;2024 flights, 24 US hubs, &ge;11 GB. Train 8.0M, validate 1.67M (2024).</span></div></div>
+    <div class="ds"><img class="icimg" src="figures/icons/noaa.png" alt="noaa">
+      <div><b>NOAA ISD Weather</b><span>Hourly wind, visibility, ceiling, temperature at 40 stations.</span></div></div>
+    <div class="ds"><img class="icimg" src="figures/icons/faa.png" alt="faa">
+      <div><b>FAA NAS Status</b><span>Live airport delays and closures.</span></div></div>
+    <div class="ds"><img class="icimg" src="figures/icons/nws.png" alt="nws">
+      <div><b>NWS Weather</b><span>Live METAR observations per hub.</span></div></div>
+    <div class="ds"><img class="icimg" src="figures/icons/opensky.png" alt="opensky">
+      <div><b>OpenSky Network</b><span>Live aircraft positions for the radar map.</span></div></div>
+    <div class="flow">
+      <div class="hd">Baseline and features</div>
+      <div class="legend">
+        <b>Typical-delay table:</b> 24 hubs &times; local hour &times; weekday (3,878 cells, training years only) powers &ldquo;today vs. typical&rdquo;.<br><br>
+        <b>14 model features:</b> departure delay, distance, dep./arr. hour (UTC), weekday, lane mean delay, plus 4 destination and 4 origin weather fields.<br><br>
+        <b>Honest split:</b> trained on 2018&ndash;2023 except 2020, evaluated on 2024, which the model never saw.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ LAYER 1 ============ -->
+<div class="panel lp" id="l1">
+  <h2 class="layer">Layer 1: <b>INGESTION</b> (Apache Kafka)</h2>
+  <div class="layerbody">
+    <div class="row">
+      <div class="stack" style="width:370px">
+        <div class="box sm"><b>Replay producer</b>BTS 2024 trips, 1k / 5k / 20k events/s</div>
+        <div class="box sm"><b>Live producer</b>OpenSky, FAA NAS, NWS METAR</div>
+      </div>
+      <div class="arrow">&rarr;</div>
+      <div class="kafka" style="flex:1"><b>Kafka topics</b>flights_stream, live_flights,<br>airport_status, weather</div>
+      <div class="arrow">&rarr;</div>
+      <div class="box" style="width:290px"><b>Record and replay</b>live sessions saved as JSONL, so the demo never depends on API uptime</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ LAYER 2 ============ -->
+<div class="panel lp" id="l2">
+  <h2 class="layer">Layer 2: <b>STREAM PROCESSING &amp; STORAGE</b> (Medallion Architecture)</h2>
+  <div class="layerbody">
+    <div class="row">
+      <div class="spark">
+        <div class="t">Spark Structured Streaming</div>
+        <div class="chips2">
+          <div class="chip"><b>1</b> Parse &amp; filter</div>
+          <div class="chip"><b>2</b> NOAA weather join</div>
+          <div class="chip hl"><b>3</b> Dedupe on flight_id</div>
+          <div class="chip"><b>4</b> GBT scoring</div>
+        </div>
+        <div class="note">Replaying a batch adds 0 rows to Gold (tested)</div>
+      </div>
+      <div class="arrow" style="font-size:40px">&rarr;</div>
+      <div class="cyl">Bronze<small>raw Kafka records</small></div>
+      <div class="arrow" style="font-size:40px">&rarr;</div>
+      <div class="cyl silver">Silver<small>cleaned, weather joined</small></div>
+      <div class="arrow" style="font-size:40px">&rarr;</div>
+      <div class="cyl gold">Gold<small>ETAs, hub congestion</small></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ LAYER 3 ============ -->
+<div class="panel lp" id="l3">
+  <h2 class="layer">Layer 3: <b>INTELLIGENCE &amp; EVALUATION</b> (Spark MLlib)</h2>
+  <div class="layerbody">
+    <div class="row">
+      <div class="stack" style="width:270px">
+        <div class="box sm"><b>Baseline 1</b>no change (&Delta; = 0)</div>
+        <div class="box sm"><b>Baseline 2</b>training lane-mean delay</div>
+        <div class="box sm"><b>Typical-delay table</b>hub &times; hour &times; weekday</div>
+      </div>
+      <div class="arrow">&rarr;</div>
+      <div class="box" style="flex:1;height:100%;display:flex;flex-direction:column;justify-content:center;padding:4px 10px">
+        <b style="font-size:25px;margin-bottom:2px">GBTRegressor, 14 features</b>
+        <div class="stats">
+          <div class="stat"><b>10.53</b><span>min MAE on 2024 (no change: 12.75)</span></div>
+          <div class="stat"><b>17%</b><span>better than no change</span></div>
+          <div class="stat"><b>+1.0%</b><span>from weather (ablation)</span></div>
+          <div class="stat"><b>2.5%</b><span>better than lane mean</span></div>
+        </div>
+        <div style="font-size:17.5px;line-height:20px">Lane and schedule matter most.</div>
+      </div>
+      <div class="arrow">&rarr;</div>
+      <div class="box" style="width:290px;height:100%;display:flex;flex-direction:column;justify-content:center">
+        <b>Error analysis</b>
+        Hardest hub: JFK (14.0 min MAE). Easiest: PHX (8.9).<br>
+        <span style="color:var(--red);font-weight:700">Flights &gt;15 min late are under-predicted by ~34 min.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ LAYER 4 ============ -->
+<div class="panel lp" id="l4">
+  <h2 class="layer">Layer 4: <b>SERVING &amp; DASHBOARD</b></h2>
+  <div class="layerbody">
+    <div class="row" style="align-items:stretch;padding:6px 0">
+      <div class="box" style="width:176px;display:flex;flex-direction:column;justify-content:center"><b>FastAPI</b>hub congestion and ETA queries</div>
+      <div class="arrow" style="align-self:center">&rarr;</div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:10px">
+        <div class="tabs" style="flex:1">
+          <div class="tab"><b>Live Radar</b>Hub map with FAA delays, weather, aircraft, and today vs. typical.</div>
+          <div class="tab"><b>Replay &amp; Benchmark</b>Fleet map, hub pressure, weather impact, worst lanes, system health.</div>
+          <div class="tab"><b>Model Insights</b>Feature groups, errors by hub and hour, seasonality.</div>
+        </div>
+        <div class="box sm" style="font-size:20px;line-height:24px">Demo line: <i>&ldquo;DFW is running N min worse than typical.&rdquo;</i><br>Predictions are always labelled as predictions.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel demo" id="demo">
+  <h2 style="font-size:36px">Demo</h2>
+  <div class="body" style="padding:0 8px"><img src="figures/qr_repo.png" alt="repo QR">
+    <div class="u">github.com/mosomo82/<br>HyperLogistic_Stream</div></div>
+</div>
+
+<!-- ============ RESULTS ============ -->
+<div class="panel results" id="results">
+  <h2 style="font-size:34px">Results &amp; Evaluation</h2>
+  <div class="body">
+    <img src="figures/ablation.png" alt="ablation">
+    <p class="cap"><b>Weather adds about 1%.</b> MAE on 2024: GBT 10.53, no change 12.75, lane mean 10.80.</p>
+    <img src="figures/outcome.png" alt="outcome">
+    <p class="cap"><b>Wins on early flights</b>, loses to &ldquo;no change&rdquo; on on-time and late ones. Not a severe-delay alarm.</p>
+    <img src="figures/benchmark.png" alt="benchmark">
+    <p class="cap"><b>4,448 records/s</b> best (orange); 4 cores (dark) beat 2 by ~22%. Provisional: 4 batches per config.</p>
+  </div>
+</div>
+
+<div class="panel concl" id="concl">
+  <h2 style="font-size:27px">Conclusion &amp; Future Work</h2>
+  <div class="body">
+    <ul>
+      <li>Kafka &rarr; Spark &rarr; Medallion &rarr; dashboard, with <b>repeat-safe</b> writes and <b>23 automated tests</b> in CI. Big delays are still missed.</li>
+      <li>Next: severe-delay classifier, full benchmark re-run, real freight data.</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>
